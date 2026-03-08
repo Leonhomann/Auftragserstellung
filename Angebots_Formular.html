@@ -476,15 +476,24 @@
             
             console.log('Formularwerte (für n8n):', data);
             
-            // n8n Webhook - direkt ohne Proxy
+            // Mit Webhook.cool - CORS-freundlich!
             try {
-                const response = await fetch('https://leonhomann.app.n8n.cloud/webhook/Angebot', {
+                const response = await fetch('https://webhook.cool/api/webhook/leonhomann-angebot', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(data)
                 });
+                
+                // Zusätzlich zu n8n senden
+                await fetch('https://leonhomann.app.n8n.cloud/webhook/Angebot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                }).catch(err => console.log('n8n direkt nicht erreichbar, aber webhook.cool hat die Daten'));
                 
                 successMessage.style.display = 'block';
                 
