@@ -1,425 +1,222 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zimmerei-Angebot Formular</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zimmerei-Angebot Formular</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
+body{
+font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+min-height:100vh;
+padding:20px;
+}
 
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-        }
+.container{
+max-width:900px;
+margin:0 auto;
+background:white;
+border-radius:12px;
+box-shadow:0 20px 60px rgba(0,0,0,0.3);
+overflow:hidden;
+}
 
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
+.header{
+background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+color:white;
+padding:40px 30px;
+text-align:center;
+}
 
-        .header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
+.header h1{font-size:28px;margin-bottom:10px}
 
-        .form-content {
-            padding: 40px 30px;
-        }
+.form-content{padding:40px 30px}
 
-        .form-section {
-            margin-bottom: 35px;
-        }
+.form-section{margin-bottom:35px}
 
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+.section-title{
+font-size:16px;
+font-weight:600;
+margin-bottom:20px;
+padding-bottom:10px;
+border-bottom:2px solid #667eea;
+}
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+.form-group{margin-bottom:20px}
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-            font-size: 14px;
-        }
+label{display:block;margin-bottom:8px;font-size:14px}
 
-        .required {
-            color: #e74c3c;
-            margin-left: 4px;
-        }
+input,textarea,select{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:6px;
+background:#f9f9f9;
+}
 
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="number"],
-        input[type="date"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background-color: #f9f9f9;
-        }
+textarea{min-height:100px}
 
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="tel"]:focus,
-        input[type="number"]:focus,
-        input[type="date"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
+.form-row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+@media(max-width:600px){
+.form-row{grid-template-columns:1fr}
+}
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+.checkbox-group{display:flex;flex-direction:column;gap:12px}
 
-        @media (max-width: 600px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
+.checkbox-item{display:flex;align-items:center}
 
-        .form-row.full {
-            grid-template-columns: 1fr;
-        }
+button{
+padding:14px 40px;
+border:none;
+border-radius:6px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+}
 
-        .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+.btn-submit{
+background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+color:white;
+}
 
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-        }
+.btn-reset{background:#ecf0f1}
 
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-right: 10px;
-            cursor: pointer;
-            accent-color: #667eea;
-        }
-
-        .checkbox-item label {
-            margin-bottom: 0;
-            font-weight: normal;
-            cursor: pointer;
-        }
-
-        .button-group {
-            margin-top: 40px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 14px 40px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-submit {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            min-width: 200px;
-        }
-
-        .btn-reset {
-            background: #ecf0f1;
-            color: #333;
-            min-width: 150px;
-        }
-
-        .field-hint {
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-top: 4px;
-        }
-
-        .info-box {
-            background: #eef4ff;
-            border: 1px solid #cfe0ff;
-            color: #24406f;
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        iframe {
-            display: none;
-        }
-    </style>
+.button-group{
+margin-top:40px;
+display:flex;
+gap:15px;
+justify-content:center;
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🏗️ Angebots-Erfassungsformular</h1>
-            <p>Interne Erfassung nach Vor-Ort-Gespräch</p>
-        </div>
 
-        <div class="form-content">
-            <div class="info-box">
-                Nach dem Absenden werden die Daten direkt an n8n übertragen.
-            </div>
+<div class="container">
 
-            <iframe name="hidden_iframe"></iframe>
+<div class="header">
+<h1>🏗️ Angebots-Erfassungsformular</h1>
+<p>Interne Erfassung nach Vor-Ort-Gespräch</p>
+</div>
 
-            <form
-                id="quotationForm"
-                action="https://leonhomann.app.n8n.cloud/webhook-test/Angebot"
-                method="POST"
-                enctype="multipart/form-data"
-                target="hidden_iframe"
-            >
-                <input type="hidden" name="timestamp" id="timestampField">
+<div class="form-content">
 
-                <div class="form-section">
-                    <div class="section-title">👤 Kundendaten</div>
+<form id="quotationForm"
+action="https://leonhomann.app.n8n.cloud/webhook/Angebot"
+method="POST">
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName">Vorname</label>
-                            <input type="text" id="firstName" name="firstName" placeholder="Bereits notiert?">
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Nachname</label>
-                            <input type="text" id="lastName" name="lastName" placeholder="Bereits notiert?">
-                        </div>
-                    </div>
+<input type="hidden" name="timestamp" id="timestampField">
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">E-Mail</label>
-                            <input type="email" id="email" name="email" placeholder="max.mustermann@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Telefon</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+49 123 456789">
-                        </div>
-                    </div>
+<div class="form-section">
+<div class="section-title">👤 Kundendaten</div>
 
-                    <div class="form-row full">
-                        <div class="form-group">
-                            <label for="address">Projektort / Adresse</label>
-                            <input type="text" id="address" name="address" placeholder="Straße, Hausnummer, PLZ, Stadt">
-                        </div>
-                    </div>
-                </div>
+<div class="form-row">
+<div class="form-group">
+<label>Vorname</label>
+<input type="text" name="firstName">
+</div>
 
-                <div class="form-section">
-                    <div class="section-title">🔨 Projektdetails</div>
+<div class="form-group">
+<label>Nachname</label>
+<input type="text" name="lastName">
+</div>
+</div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="projectType">Projektart <span class="required">*</span></label>
-                            <select id="projectType" name="projectType" required>
-                                <option value="">-- Bitte wählen --</option>
-                                <option value="Neubau">Neubau</option>
-                                <option value="Renovierung">Renovierung</option>
-                                <option value="Umbau">Umbau</option>
-                                <option value="Sanierung">Sanierung</option>
-                                <option value="Dachausbau">Dachausbau</option>
-                                <option value="Dacheindeckung">Dacheindeckung / Dachsanierung</option>
-                                <option value="Gaube">Gaube / Dachgaupe</option>
-                                <option value="Dachfenster">Dachfenster</option>
-                                <option value="Terrasse">Terrasse / Balkon</option>
-                                <option value="Carport">Carport / Unterstand</option>
-                                <option value="Veranda">Veranda / Überdachung</option>
-                                <option value="Zaun">Zaun / Sichtschutz</option>
-                                <option value="Innenausbau">Innenausbau</option>
-                                <option value="Fenster">Fenster / Türen</option>
-                                <option value="Wintergarten">Wintergarten</option>
-                                <option value="Holzschutz">Holzschutz / Sanierung</option>
-                                <option value="Energetische-Sanierung">Energetische Sanierung</option>
-                                <option value="Sonstiges">Sonstiges</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="projectSize">Geschätzte Fläche (m²) <span class="required">*</span></label>
-                            <input type="number" id="projectSize" name="projectSize" required placeholder="z.B. 150" step="0.01" min="0">
-                        </div>
-                    </div>
+<div class="form-row">
+<div class="form-group">
+<label>E-Mail</label>
+<input type="email" name="email">
+</div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="timeline">Zeitrahmen <span class="required">*</span></label>
-                            <select id="timeline" name="timeline" required>
-                                <option value="">-- Bitte wählen --</option>
-                                <option value="Sofort">Sofort (innerhalb 2 Wochen)</option>
-                                <option value="1-2-Monate">1-2 Monate</option>
-                                <option value="3-6-Monate">3-6 Monate</option>
-                                <option value="6-12-Monate">6-12 Monate</option>
-                                <option value="Offen">Zeitrahmen offen</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="estimatedBudget">Grobe Budgetschätzung (€) <span class="required">*</span></label>
-                            <input type="number" id="estimatedBudget" name="estimatedBudget" required placeholder="z.B. 25000" step="100" min="0">
-                        </div>
-                    </div>
+<div class="form-group">
+<label>Telefon</label>
+<input type="tel" name="phone">
+</div>
+</div>
 
-                    <div class="form-group">
-                        <label>Leistungsumfang</label>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="service1" name="services" value="Material">
-                                <label for="service1">Material</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="service2" name="services" value="Montage">
-                                <label for="service2">Montage / Handwerk</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="service3" name="services" value="Planung">
-                                <label for="service3">Planung & Beratung</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="service4" name="services" value="Bauleitung">
-                                <label for="service4">Bauleitung / Überwachung</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="form-group">
+<label>Adresse</label>
+<input type="text" name="address">
+</div>
+</div>
 
-                <div class="form-section">
-                    <div class="section-title">📝 Vor-Ort-Notizen & Details</div>
+<div class="form-section">
+<div class="section-title">🔨 Projektdetails</div>
 
-                    <div class="form-group">
-                        <label for="projectDescription">Projektbeschreibung & Anforderungen <span class="required">*</span></label>
-                        <textarea id="projectDescription" name="projectDescription" required></textarea>
-                        <div class="field-hint">Je detaillierter, desto besser das Angebot</div>
-                    </div>
+<div class="form-row">
 
-                    <div class="form-group">
-                        <label for="materials">Materialvorgaben & Spezifikationen</label>
-                        <textarea id="materials" name="materials"></textarea>
-                    </div>
+<div class="form-group">
+<label>Projektart</label>
+<select name="projectType">
 
-                    <div class="form-group">
-                        <label for="challenges">Besonderheiten & Herausforderungen</label>
-                        <textarea id="challenges" name="challenges"></textarea>
-                    </div>
-                </div>
+<option value="">Bitte wählen</option>
+<option value="Carport">Carport</option>
+<option value="Terrasse">Terrasse</option>
+<option value="Dachsanierung">Dachsanierung</option>
+<option value="Innenausbau">Innenausbau</option>
 
-                <div class="form-section">
-                    <div class="section-title">⚙️ Interne Informationen</div>
+</select>
+</div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="visitDate">Besichtigungstermin</label>
-                            <input type="date" id="visitDate" name="visitDate">
-                        </div>
-                        <div class="form-group">
-                            <label for="employee">Bearbeitender Mitarbeiter</label>
-                            <input type="text" id="employee" name="employee" placeholder="Dein Name">
-                        </div>
-                    </div>
+<div class="form-group">
+<label>Fläche m²</label>
+<input type="number" name="projectSize">
+</div>
 
-                    <div class="form-group">
-                        <label for="priority">Priorität</label>
-                        <select id="priority" name="priority">
-                            <option value="">-- Wählen --</option>
-                            <option value="Niedrig">Niedrig</option>
-                            <option value="Normal">Normal</option>
-                            <option value="Hoch">Hoch</option>
-                            <option value="Dringend">Dringend</option>
-                        </select>
-                    </div>
+</div>
 
-                    <div class="form-group">
-                        <label for="followUp">Besonderheiten für Angebotserstellung</label>
-                        <textarea id="followUp" name="followUp"></textarea>
-                    </div>
+<div class="form-row">
 
-                    <div class="form-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="hasMeasurements" name="hasMeasurements" value="Ja">
-                            <label for="hasMeasurements">Messungen erfolgt / vorhanden</label>
-                        </div>
-                    </div>
+<div class="form-group">
+<label>Zeitrahmen</label>
+<select name="timeline">
+<option>Sofort</option>
+<option>1-2 Monate</option>
+<option>3-6 Monate</option>
+</select>
+</div>
 
-                    <div class="form-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="hasPhotos" name="hasPhotos" value="Ja">
-                            <label for="hasPhotos">Fotos gemacht</label>
-                        </div>
-                    </div>
-                </div>
+<div class="form-group">
+<label>Budget</label>
+<input type="number" name="estimatedBudget">
+</div>
 
-                <div class="button-group">
-                    <button type="reset" class="btn-reset">Zurücksetzen</button>
-                    <button type="submit" class="btn-submit">Angebot anfordern</button>
-                </div>
-            </form>
-        </div>
-    </div>
+</div>
+
+<div class="form-group">
+<label>Projektbeschreibung</label>
+<textarea name="projectDescription"></textarea>
+</div>
+
+</div>
+
+<div class="button-group">
+<button type="reset" class="btn-reset">Zurücksetzen</button>
+<button type="submit" class="btn-submit">Angebot anfordern</button>
+</div>
+
+</form>
+
+</div>
+</div>
+
 <script>
-    console.log('VERSION FETCH POST');
-    
-    const form = document.getElementById('quotationForm');
-    
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        ...
-    
-    </script>
+
+const form=document.getElementById("quotationForm")
+
+form.addEventListener("submit",function(){
+document.getElementById("timestampField").value=new Date().toISOString()
+})
+
+</script>
+
 </body>
 </html>
