@@ -411,16 +411,15 @@
             </form>
         </div>
     </div>
-
-    <script>
-        console.log('VERSION DIREKTES FORM POST');
-
-        const form = document.getElementById('quotationForm');
-        const timestampField = document.getElementById('timestampField');
-
-        form.addEventListener('submit', function () {
-            timestampField.value = new Date().toISOString();
-        });
+<script>
+    console.log('VERSION FETCH POST');
+    
+    const form = document.getElementById('quotationForm');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        ...
+    
     </script>
 </body>
 </html>
