@@ -43,11 +43,18 @@ font-weight:600;
 margin-bottom:20px;
 padding-bottom:10px;
 border-bottom:2px solid #667eea;
+color:#333;
 }
 
 .form-group{margin-bottom:20px}
 
-label{display:block;margin-bottom:8px;font-size:14px}
+label{
+display:block;
+margin-bottom:8px;
+font-size:14px;
+font-weight:500;
+color:#444;
+}
 
 input,textarea,select{
 width:100%;
@@ -55,9 +62,17 @@ padding:12px;
 border:1px solid #ddd;
 border-radius:6px;
 background:#f9f9f9;
+font-size:14px;
+transition:border-color 0.2s;
 }
 
-textarea{min-height:100px}
+input:focus,textarea:focus,select:focus{
+outline:none;
+border-color:#667eea;
+background:#fff;
+}
+
+textarea{min-height:100px;resize:vertical}
 
 .form-row{
 display:grid;
@@ -65,13 +80,15 @@ grid-template-columns:1fr 1fr;
 gap:20px;
 }
 
-@media(max-width:600px){
-.form-row{grid-template-columns:1fr}
+.form-row-3{
+display:grid;
+grid-template-columns:2fr 1fr 1fr;
+gap:20px;
 }
 
-.checkbox-group{display:flex;flex-direction:column;gap:12px}
-
-.checkbox-item{display:flex;align-items:center}
+@media(max-width:600px){
+.form-row,.form-row-3{grid-template-columns:1fr}
+}
 
 button{
 padding:14px 40px;
@@ -80,14 +97,17 @@ border-radius:6px;
 font-size:15px;
 font-weight:600;
 cursor:pointer;
+transition:opacity 0.2s;
 }
+
+button:hover{opacity:0.88}
 
 .btn-submit{
 background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
 color:white;
 }
 
-.btn-reset{background:#ecf0f1}
+.btn-reset{background:#ecf0f1;color:#555}
 
 .button-group{
 margin-top:40px;
@@ -95,6 +115,14 @@ display:flex;
 gap:15px;
 justify-content:center;
 }
+
+/* Sonstiges-Feld */
+#sonstigesWrapper{
+margin-top:12px;
+display:none;
+}
+
+#sonstigesWrapper.visible{display:block}
 </style>
 </head>
 
@@ -103,104 +131,150 @@ justify-content:center;
 <div class="container">
 
 <div class="header">
-<h1>🏗️ Angebots-Erfassungsformular</h1>
-<p>Interne Erfassung nach Vor-Ort-Gespräch</p>
+  <h1>🏗️ Angebots-Erfassungsformular</h1>
+  <p>Interne Erfassung nach Vor-Ort-Gespräch</p>
 </div>
 
 <div class="form-content">
 
 <form id="quotationForm"
-action="https://n8n-n8n.pdvkji.easypanel.host/webhook-test/angebot-formular"
-method="POST">
+  action="https://n8n-n8n.pdvkji.easypanel.host/webhook-test/angebot-formular"
+  method="POST">
 
 <input type="hidden" name="timestamp" id="timestampField">
 
+<!-- ── Kundendaten ──────────────────────────────────────────── -->
 <div class="form-section">
 <div class="section-title">👤 Kundendaten</div>
 
 <div class="form-row">
-<div class="form-group">
-<label>Vorname</label>
-<input type="text" name="firstName">
-</div>
-
-<div class="form-group">
-<label>Nachname</label>
-<input type="text" name="lastName">
-</div>
+  <div class="form-group">
+    <label>Vorname</label>
+    <input type="text" name="firstName" placeholder="Max">
+  </div>
+  <div class="form-group">
+    <label>Nachname</label>
+    <input type="text" name="lastName" placeholder="Mustermann">
+  </div>
 </div>
 
 <div class="form-row">
-<div class="form-group">
-<label>E-Mail</label>
-<input type="email" name="email">
+  <div class="form-group">
+    <label>E-Mail</label>
+    <input type="email" name="email" placeholder="max@beispiel.de">
+  </div>
+  <div class="form-group">
+    <label>Telefon</label>
+    <input type="tel" name="phone" placeholder="+49 151 ...">
+  </div>
 </div>
 
+<!-- Adresse aufgeteilt -->
 <div class="form-group">
-<label>Telefon</label>
-<input type="tel" name="phone">
-</div>
+  <label>Straße &amp; Hausnummer</label>
+  <input type="text" name="street" placeholder="Musterstraße 12">
 </div>
 
-<div class="form-group">
-<label>Adresse</label>
-<input type="text" name="address">
-</div>
+<div class="form-row-3">
+  <div class="form-group">
+    <label>Ort</label>
+    <input type="text" name="city" placeholder="Hamburg">
+  </div>
+  <div class="form-group">
+    <label>PLZ</label>
+    <input type="text" name="postalCode" placeholder="20099" maxlength="5">
+  </div>
+  <div class="form-group">
+    <label>Land</label>
+    <input type="text" name="country" value="Deutschland">
+  </div>
 </div>
 
+</div>
+
+<!-- ── Projektdetails ──────────────────────────────────────── -->
 <div class="form-section">
 <div class="section-title">🔨 Projektdetails</div>
 
 <div class="form-row">
 
-<div class="form-group">
-<label>Projektart</label>
-<select name="projectType">
+  <div class="form-group">
+    <label>Projektart</label>
+    <select name="projectType" id="projectTypeSelect">
+      <option value="">Bitte wählen</option>
+      <optgroup label="Dach">
+        <option value="Dachsanierung">Dachsanierung</option>
+        <option value="Dachneubau">Dachneubau</option>
+        <option value="Dachausbau">Dachausbau / Dämmung</option>
+        <option value="Gauben">Gauben / Dachfenster</option>
+        <option value="Flachdach">Flachdach</option>
+      </optgroup>
+      <optgroup label="Holzbau Außen">
+        <option value="Carport">Carport</option>
+        <option value="Terrasse">Terrasse / Holzterrasse</option>
+        <option value="Balkon">Balkon</option>
+        <option value="Gartenhaus">Gartenhaus / Nebengebäude</option>
+        <option value="Holzfassade">Holzfassade / Verschalung</option>
+        <option value="Pergola">Pergola / Überdachung</option>
+      </optgroup>
+      <optgroup label="Innenausbau">
+        <option value="Innenausbau">Innenausbau allgemein</option>
+        <option value="Treppe">Treppe</option>
+        <option value="Dachgeschossausbau">Dachgeschossausbau</option>
+        <option value="Trockenbau">Trockenbau / Wände</option>
+        <option value="Bodenbelag">Bodenbelag / Parkett / Dielen</option>
+      </optgroup>
+      <optgroup label="Zimmerarbeiten">
+        <option value="Zimmerei allgemein">Zimmerei allgemein</option>
+        <option value="Reparatur">Reparatur / Instandsetzung</option>
+        <option value="Sturmschaden">Sturmschaden</option>
+      </optgroup>
+      <option value="Sonstiges">Sonstiges (freie Eingabe)</option>
+    </select>
 
-<option value="">Bitte wählen</option>
-<option value="Carport">Carport</option>
-<option value="Terrasse">Terrasse</option>
-<option value="Dachsanierung">Dachsanierung</option>
-<option value="Innenausbau">Innenausbau</option>
+    <!-- Sonstiges-Freifeld -->
+    <div id="sonstigesWrapper">
+      <input type="text" name="projectTypeCustom" placeholder="Projektart beschreiben …">
+    </div>
+  </div>
 
-</select>
-</div>
-
-<div class="form-group">
-<label>Fläche m²</label>
-<input type="number" name="projectSize">
-</div>
+  <div class="form-group">
+    <label>Fläche m²</label>
+    <input type="number" name="projectSize" placeholder="z.B. 120" min="1">
+  </div>
 
 </div>
 
 <div class="form-row">
 
-<div class="form-group">
-<label>Zeitrahmen</label>
-<select name="timeline">
-<option>Sofort</option>
-<option>1-2 Monate</option>
-<option>3-6 Monate</option>
-</select>
+  <div class="form-group">
+    <label>Zeitrahmen</label>
+    <select name="timeline">
+      <option value="sofort">Sofort (innerhalb 4 Wochen)</option>
+      <option value="1-2 Monate">1–2 Monate</option>
+      <option value="3-6 Monate">3–6 Monate</option>
+      <option value="ab 6 Monate">Ab 6 Monate / Planung</option>
+      <option value="flexibel">Flexibel / offen</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Budget (€ netto, intern)</label>
+    <input type="number" name="estimatedBudget" placeholder="z.B. 15000" min="0">
+  </div>
+
 </div>
 
 <div class="form-group">
-<label>Budget</label>
-<input type="number" name="estimatedBudget">
-</div>
-
-</div>
-
-<div class="form-group">
-<label>Projektbeschreibung</label>
-<textarea name="projectDescription"></textarea>
+  <label>Projektbeschreibung</label>
+  <textarea name="projectDescription" placeholder="Kurze Beschreibung der gewünschten Leistungen, Besonderheiten, Zustand des Bestands …"></textarea>
 </div>
 
 </div>
 
 <div class="button-group">
-<button type="reset" class="btn-reset">Zurücksetzen</button>
-<button type="submit" class="btn-submit">Angebot anfordern</button>
+  <button type="reset" class="btn-reset">↺ Zurücksetzen</button>
+  <button type="submit" class="btn-submit">📤 Angebot anfordern</button>
 </div>
 
 </form>
@@ -210,11 +284,23 @@ method="POST">
 
 <script>
 
-const form=document.getElementById("quotationForm")
+// Timestamp beim Absenden setzen
+document.getElementById("quotationForm").addEventListener("submit", function(){
+  document.getElementById("timestampField").value = new Date().toISOString();
+});
 
-form.addEventListener("submit",function(){
-document.getElementById("timestampField").value=new Date().toISOString()
-})
+// Sonstiges-Feld ein-/ausblenden
+document.getElementById("projectTypeSelect").addEventListener("change", function(){
+  const wrapper = document.getElementById("sonstigesWrapper");
+  if (this.value === "Sonstiges") {
+    wrapper.classList.add("visible");
+    wrapper.querySelector("input").required = true;
+  } else {
+    wrapper.classList.remove("visible");
+    wrapper.querySelector("input").required = false;
+    wrapper.querySelector("input").value = "";
+  }
+});
 
 </script>
 
