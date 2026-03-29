@@ -1,308 +1,347 @@
 <!DOCTYPE html>
-<html lang="de">
+<html class="scroll-smooth" lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zimmerei-Angebot Formular</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Angebotsformular - Homann Holzbau</title>
+<meta name="description" content="Angebotsformular von Homann Holzbau f&uuml;r Carports, Dachsanierung, Holzrahmenbau, Terrassen und weitere Holzbauprojekte."/>
+<meta name="theme-color" content="#1B365D"/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="512x512" href="favicon-blue.png"/>
+<link rel="shortcut icon" href="favicon-blue.png"/>
+<link rel="apple-touch-icon" href="apple-touch-icon-blue.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#1B365D",
+        "primary-dark": "#122544",
+        gold: "#C19A6B",
+        surface: "#f9f9f9",
+        "surface-container-low": "#f4f3f3",
+        "surface-container": "#eeeeee",
+        "outline-variant": "#c4c6cf",
+        "on-surface": "#1a1c1c",
+        "on-surface-variant": "#44474e"
+      },
+      fontFamily: { headline: ["Inter"], body: ["Inter"] }
+    }
+  }
+};
+</script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
-font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-min-height:100vh;
-padding:20px;
-}
-
-.container{
-max-width:900px;
-margin:0 auto;
-background:white;
-border-radius:12px;
-box-shadow:0 20px 60px rgba(0,0,0,0.3);
-overflow:hidden;
-}
-
-.header{
-background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-color:white;
-padding:40px 30px;
-text-align:center;
-}
-
-.header h1{font-size:28px;margin-bottom:10px}
-
-.form-content{padding:40px 30px}
-
-.form-section{margin-bottom:35px}
-
-.section-title{
-font-size:16px;
-font-weight:600;
-margin-bottom:20px;
-padding-bottom:10px;
-border-bottom:2px solid #667eea;
-color:#333;
-}
-
-.form-group{margin-bottom:20px}
-
-label{
-display:block;
-margin-bottom:8px;
-font-size:14px;
-font-weight:500;
-color:#444;
-}
-
-input,textarea,select{
-width:100%;
-padding:12px;
-border:1px solid #ddd;
-border-radius:6px;
-background:#f9f9f9;
-font-size:14px;
-transition:border-color 0.2s;
-}
-
-input:focus,textarea:focus,select:focus{
-outline:none;
-border-color:#667eea;
-background:#fff;
-}
-
-textarea{min-height:100px;resize:vertical}
-
-.form-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-.form-row-3{
-display:grid;
-grid-template-columns:2fr 1fr 1fr;
-gap:20px;
-}
-
-@media(max-width:600px){
-.form-row,.form-row-3{grid-template-columns:1fr}
-}
-
-button{
-padding:14px 40px;
-border:none;
-border-radius:6px;
-font-size:15px;
-font-weight:600;
-cursor:pointer;
-transition:opacity 0.2s;
-}
-
-button:hover{opacity:0.88}
-
-.btn-submit{
-background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-color:white;
-}
-
-.btn-reset{background:#ecf0f1;color:#555}
-
-.button-group{
-margin-top:40px;
-display:flex;
-gap:15px;
-justify-content:center;
-}
-
-/* Sonstiges-Feld */
-#sonstigesWrapper{
-margin-top:12px;
-display:none;
-}
-
-#sonstigesWrapper.visible{display:block}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+.blueprint-grid{background-image:radial-gradient(circle,#c4c6cf 1px,transparent 1px);background-size:40px 40px;}
 </style>
 </head>
-
-<body>
-
-<div class="container">
-
-<div class="header">
-  <h1>🏗️ Angebots-Erfassungsformular</h1>
-  <p>Interne Erfassung nach Vor-Ort-Gespräch</p>
-</div>
-
-<div class="form-content">
-
-<form id="quotationForm"
-  action="https://n8n-n8n.pdvkji.easypanel.host/webhook-test/angebot-formular"
-  method="POST">
-
-<input type="hidden" name="timestamp" id="timestampField">
-
-<!-- ── Kundendaten ──────────────────────────────────────────── -->
-<div class="form-section">
-<div class="section-title">👤 Kundendaten</div>
-
-<div class="form-row">
-  <div class="form-group">
-    <label>Vorname</label>
-    <input type="text" name="firstName" placeholder="Max">
-  </div>
-  <div class="form-group">
-    <label>Nachname</label>
-    <input type="text" name="lastName" placeholder="Mustermann">
-  </div>
-</div>
-
-<div class="form-row">
-  <div class="form-group">
-    <label>E-Mail</label>
-    <input type="email" name="email" placeholder="max@beispiel.de">
-  </div>
-  <div class="form-group">
-    <label>Telefon</label>
-    <input type="tel" name="phone" placeholder="+49 151 ...">
-  </div>
-</div>
-
-<!-- Adresse aufgeteilt -->
-<div class="form-group">
-  <label>Straße &amp; Hausnummer</label>
-  <input type="text" name="street" placeholder="Musterstraße 12">
-</div>
-
-<div class="form-row-3">
-  <div class="form-group">
-    <label>Ort</label>
-    <input type="text" name="city" placeholder="Hamburg">
-  </div>
-  <div class="form-group">
-    <label>PLZ</label>
-    <input type="text" name="postalCode" placeholder="20099" maxlength="5">
-  </div>
-  <div class="form-group">
-    <label>Land</label>
-    <input type="text" name="country" value="Deutschland">
-  </div>
-</div>
-
-</div>
-
-<!-- ── Projektdetails ──────────────────────────────────────── -->
-<div class="form-section">
-<div class="section-title">🔨 Projektdetails</div>
-
-<div class="form-row">
-
-  <div class="form-group">
-    <label>Projektart</label>
-    <select name="projectType" id="projectTypeSelect">
-      <option value="">Bitte wählen</option>
-      <optgroup label="Dach">
-        <option value="Dachsanierung">Dachsanierung</option>
-        <option value="Dachneubau">Dachneubau</option>
-        <option value="Dachausbau">Dachausbau / Dämmung</option>
-        <option value="Gauben">Gauben / Dachfenster</option>
-        <option value="Flachdach">Flachdach</option>
-      </optgroup>
-      <optgroup label="Holzbau Außen">
-        <option value="Carport">Carport</option>
-        <option value="Terrasse">Terrasse / Holzterrasse</option>
-        <option value="Balkon">Balkon</option>
-        <option value="Gartenhaus">Gartenhaus / Nebengebäude</option>
-        <option value="Holzfassade">Holzfassade / Verschalung</option>
-        <option value="Pergola">Pergola / Überdachung</option>
-      </optgroup>
-      <optgroup label="Innenausbau">
-        <option value="Innenausbau">Innenausbau allgemein</option>
-        <option value="Treppe">Treppe</option>
-        <option value="Dachgeschossausbau">Dachgeschossausbau</option>
-        <option value="Trockenbau">Trockenbau / Wände</option>
-        <option value="Bodenbelag">Bodenbelag / Parkett / Dielen</option>
-      </optgroup>
-      <optgroup label="Zimmerarbeiten">
-        <option value="Zimmerei allgemein">Zimmerei allgemein</option>
-        <option value="Reparatur">Reparatur / Instandsetzung</option>
-        <option value="Sturmschaden">Sturmschaden</option>
-      </optgroup>
-      <option value="Sonstiges">Sonstiges (freie Eingabe)</option>
-    </select>
-
-    <!-- Sonstiges-Freifeld -->
-    <div id="sonstigesWrapper">
-      <input type="text" name="projectTypeCustom" placeholder="Projektart beschreiben …">
+<body class="bg-surface-container-low font-body text-on-surface antialiased">
+<nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-3 min-w-0">
+      <img src="nav-logo.jpg" alt="Homann Holzbau Logo" width="703" height="471" class="h-12 w-auto object-contain"/>
+      <span class="hidden sm:inline text-xs font-bold uppercase tracking-[0.18em] text-primary">Angebotsformular</span>
+    </a>
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary hover:text-gold transition-colors">
+        <span class="material-symbols-outlined text-base">arrow_back</span>
+        Zur Website
+      </a>
+      <a href="tel:+4915126622331" class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark transition-colors">
+        Direkt anrufen
+      </a>
     </div>
   </div>
+</nav>
 
-  <div class="form-group">
-    <label>Fläche m²</label>
-    <input type="number" name="projectSize" placeholder="z.B. 120" min="1">
-  </div>
+<main class="py-8 md:py-12">
+  <section class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.3fr] gap-6 items-start">
+      <aside class="relative overflow-hidden rounded-[2rem] bg-primary text-white p-8 md:p-10 shadow-xl">
+        <div class="absolute inset-0 blueprint-grid opacity-[0.06] pointer-events-none"></div>
+        <div class="relative z-10">
+          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-white/90">
+            <span>Anfrage</span>
+            <span>&bull;</span>
+            <span>Homann Holzbau</span>
+          </span>
+          <h1 class="mt-6 text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            Strukturiert anfragen.<br/>Schneller ein Angebot erhalten.
+          </h1>
+          <p class="mt-5 text-sm md:text-base leading-relaxed text-white/75">
+            Mir ist der pers&ouml;nliche Kontakt besonders wichtig. Ich telefoniere gerne mit Ihnen und komme bei passenden Projekten auch pers&ouml;nlich vorbei, um alles in Ruhe zu besprechen.
+          </p>
 
-</div>
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+            <div class="rounded-2xl border border-white/10 bg-white/10 p-4">
+              <p class="text-[0.68rem] uppercase tracking-[0.18em] text-gold font-bold">Typische Anfragen</p>
+              <p class="mt-2 text-sm text-white/80">Dachsanierung, Dachstuhl, Carport, Terrasse, Pergola, Holzfassade, Holzrahmenbau, Reparaturen und Sonderanfertigungen.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/10 p-4">
+              <p class="text-[0.68rem] uppercase tracking-[0.18em] text-gold font-bold">R&uuml;ckmeldung</p>
+              <p class="mt-2 text-sm text-white/80">In der Regel innerhalb von 1 bis 2 Werktagen, je nach Umfang und Komplexit&auml;t Ihres Projekts.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/10 p-4">
+              <p class="text-[0.68rem] uppercase tracking-[0.18em] text-gold font-bold">Direktkontakt</p>
+              <div class="mt-2 flex flex-col gap-2 text-sm text-white/85">
+                <a href="tel:+4915126622331" class="hover:text-gold transition-colors">+49 151 266 22 331</a>
+                <a href="mailto:leon.homann@googlemail.com" class="hover:text-gold transition-colors">leon.homann@googlemail.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
 
-<div class="form-row">
+      <section class="relative overflow-hidden rounded-[2rem] border border-outline-variant/20 bg-white shadow-xl">
+        <div class="absolute inset-0 blueprint-grid opacity-[0.03] pointer-events-none"></div>
+        <div class="relative z-10 border-b border-outline-variant/20 bg-white px-6 py-8 md:px-10">
+          <p class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-gold">Angebotsformular</p>
+          <h2 class="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight text-primary">Projektangaben erfassen</h2>
+          <p class="mt-3 max-w-2xl text-sm md:text-base leading-relaxed text-on-surface-variant">
+            Nutzen Sie dieses Formular f&uuml;r eine vollst&auml;ndige Anfrage. Je genauer die Angaben, desto besser kann ich Ihr Projekt einsch&auml;tzen und mich pers&ouml;nlich bei Ihnen zur&uuml;ckmelden.
+          </p>
+        </div>
 
-  <div class="form-group">
-    <label>Zeitrahmen</label>
-    <select name="timeline">
-      <option value="sofort">Sofort (innerhalb 4 Wochen)</option>
-      <option value="1-2 Monate">1–2 Monate</option>
-      <option value="3-6 Monate">3–6 Monate</option>
-      <option value="ab 6 Monate">Ab 6 Monate / Planung</option>
-      <option value="flexibel">Flexibel / offen</option>
-    </select>
-  </div>
+        <form id="quotationForm" action="https://n8n-n8n.pdvkji.easypanel.host/webhook-test/angebot-formular" method="POST" accept-charset="UTF-8" class="relative z-10 px-6 py-8 md:px-10 md:py-10">
+          <input type="hidden" name="timestamp" id="timestampField"/>
+          <input type="hidden" name="projectTypeResolved" id="projectTypeResolved"/>
 
-  <div class="form-group">
-    <label>Budget (€ netto, intern)</label>
-    <input type="number" name="estimatedBudget" placeholder="z.B. 15000" min="0">
-  </div>
+          <div id="form-status" class="hidden mb-6 rounded-2xl border px-4 py-3 text-sm"></div>
 
-</div>
+          <div class="space-y-8">
+            <section>
+              <div class="mb-5 flex items-center gap-3">
+                <span class="material-symbols-outlined text-gold">person</span>
+                <h3 class="text-lg font-bold text-primary">Kundendaten</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Vorname</span>
+                  <input type="text" name="firstName" required autocomplete="given-name" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="Max"/>
+                </label>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Nachname</span>
+                  <input type="text" name="lastName" required autocomplete="family-name" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="Mustermann"/>
+                </label>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">E-Mail</span>
+                  <input type="email" name="email" required autocomplete="email" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="max@beispiel.de"/>
+                </label>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Telefon</span>
+                  <input type="tel" name="phone" autocomplete="tel" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="+49 151 ..."/>
+                </label>
+                <label class="md:col-span-2 flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Stra&szlig;e &amp; Hausnummer</span>
+                  <input type="text" name="street" autocomplete="address-line1" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="Musterstra&szlig;e 12"/>
+                </label>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Ort</span>
+                  <input type="text" name="city" autocomplete="address-level2" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="Hamburg"/>
+                </label>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">PLZ</span>
+                  <input type="text" name="postalCode" inputmode="numeric" maxlength="5" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="20099"/>
+                </label>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Land</span>
+                  <input type="text" name="country" value="Deutschland" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface focus:border-primary focus:ring-primary"/>
+                </label>
+              </div>
+            </section>
 
-<div class="form-group">
-  <label>Projektbeschreibung</label>
-  <textarea name="projectDescription" placeholder="Kurze Beschreibung der gewünschten Leistungen, Besonderheiten, Zustand des Bestands …"></textarea>
-</div>
+            <section>
+              <div class="mb-5 flex items-center gap-3">
+                <span class="material-symbols-outlined text-gold">construction</span>
+                <h3 class="text-lg font-bold text-primary">Projektdetails</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Projektart</span>
+                  <select name="projectType" id="projectTypeSelect" required class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface focus:border-primary focus:ring-primary">
+                    <option value="">Bitte w&auml;hlen</option>
+                    <optgroup label="Dach &amp; Sanierung">
+                      <option value="Dachsanierung">Dachsanierung</option>
+                      <option value="Dachstuhl Neubau">Dachstuhl Neubau</option>
+                      <option value="Dachneubau">Dachneubau</option>
+                      <option value="Dachausbau / D&auml;mmung">Dachausbau / D&auml;mmung</option>
+                      <option value="Gauben / Dachfenster">Gauben / Dachfenster</option>
+                      <option value="Flachdach">Flachdach</option>
+                    </optgroup>
+                    <optgroup label="Holzbau Au&szlig;en">
+                      <option value="Carport">Carport</option>
+                      <option value="Terrasse / Holzterrasse">Terrasse / Holzterrasse</option>
+                      <option value="Balkon">Balkon</option>
+                      <option value="Gartenhaus / Nebengeb&auml;ude">Gartenhaus / Nebengeb&auml;ude</option>
+                      <option value="Holzfassade / Verschalung">Holzfassade / Verschalung</option>
+                      <option value="Pergola / &Uuml;berdachung">Pergola / &Uuml;berdachung</option>
+                    </optgroup>
+                    <optgroup label="Holzrahmenbau &amp; Ausbau">
+                      <option value="Holzrahmenbau">Holzrahmenbau</option>
+                      <option value="Anbau / Aufstockung">Anbau / Aufstockung</option>
+                      <option value="Innenausbau allgemein">Innenausbau allgemein</option>
+                      <option value="Dachgeschossausbau">Dachgeschossausbau</option>
+                      <option value="Trockenbau / W&auml;nde">Trockenbau / W&auml;nde</option>
+                      <option value="Bodenbelag / Parkett / Dielen">Bodenbelag / Parkett / Dielen</option>
+                    </optgroup>
+                    <optgroup label="Zimmerarbeiten &amp; Sonstiges">
+                      <option value="Zimmerei allgemein">Zimmerei allgemein</option>
+                      <option value="Reparatur / Instandsetzung">Reparatur / Instandsetzung</option>
+                      <option value="Sturmschaden">Sturmschaden</option>
+                      <option value="Treppe">Treppe</option>
+                      <option value="Sonderanfertigung">Sonderanfertigung</option>
+                    </optgroup>
+                    <option value="Sonstiges">Sonstiges (freie Eingabe)</option>
+                  </select>
+                </label>
 
-</div>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Fl&auml;che in m&sup2;</span>
+                  <input type="number" name="projectSize" min="1" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="z. B. 120"/>
+                </label>
 
-<div class="button-group">
-  <button type="reset" class="btn-reset">↺ Zurücksetzen</button>
-  <button type="submit" class="btn-submit">📤 Angebot anfordern</button>
-</div>
+                <div id="sonstigesWrapper" class="md:col-span-2 hidden">
+                  <label class="flex flex-col gap-2">
+                    <span class="text-sm font-bold text-primary">Projektart beschreiben</span>
+                    <input type="text" name="projectTypeCustom" id="projectTypeCustom" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="Bitte Projektart genauer beschreiben"/>
+                  </label>
+                </div>
 
-</form>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Zeitrahmen</span>
+                  <select name="timeline" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface focus:border-primary focus:ring-primary">
+                    <option value="sofort">Sofort (innerhalb 4 Wochen)</option>
+                    <option value="1-2 Monate">1-2 Monate</option>
+                    <option value="3-6 Monate">3-6 Monate</option>
+                    <option value="ab 6 Monate">Ab 6 Monate / Planung</option>
+                    <option value="flexibel">Flexibel / offen</option>
+                  </select>
+                </label>
 
-</div>
-</div>
+                <label class="flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Budget in EUR netto</span>
+                  <input type="number" name="estimatedBudget" min="0" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="z. B. 15000"/>
+                </label>
+
+                <label class="md:col-span-2 flex flex-col gap-2">
+                  <span class="text-sm font-bold text-primary">Projektbeschreibung</span>
+                  <textarea name="projectDescription" required rows="7" class="w-full rounded-xl border border-outline-variant/30 bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-slate-400 focus:border-primary focus:ring-primary" placeholder="Kurze Beschreibung der gew&uuml;nschten Leistungen, Besonderheiten, Zustand des Bestands, Ma&szlig;e oder sonstige wichtige Hinweise."></textarea>
+                </label>
+              </div>
+            </section>
+          </div>
+
+          <div class="mt-10 flex flex-col gap-4 rounded-2xl border border-outline-variant/20 bg-surface-container-low p-5">
+            <div class="flex w-full flex-col sm:flex-row gap-3 sm:w-auto">
+              <button type="reset" class="inline-flex w-full sm:w-auto items-center justify-center rounded-xl border border-outline-variant/30 bg-white px-6 py-3 text-sm font-semibold text-primary hover:bg-surface transition-colors">
+                Zur&uuml;cksetzen
+              </button>
+              <button type="submit" id="submitButton" class="inline-flex w-full sm:w-auto items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white hover:bg-primary-dark transition-colors">
+                Angebot anfordern
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </section>
+</main>
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('quotationForm');
+  const timestampField = document.getElementById('timestampField');
+  const projectTypeSelect = document.getElementById('projectTypeSelect');
+  const projectTypeResolved = document.getElementById('projectTypeResolved');
+  const sonstigesWrapper = document.getElementById('sonstigesWrapper');
+  const projectTypeCustom = document.getElementById('projectTypeCustom');
+  const submitButton = document.getElementById('submitButton');
+  const formStatus = document.getElementById('form-status');
 
-// Timestamp beim Absenden setzen
-document.getElementById("quotationForm").addEventListener("submit", function(){
-  document.getElementById("timestampField").value = new Date().toISOString();
-});
+  function syncProjectTypeField() {
+    if (!projectTypeSelect || !sonstigesWrapper || !projectTypeCustom) {
+      return;
+    }
 
-// Sonstiges-Feld ein-/ausblenden
-document.getElementById("projectTypeSelect").addEventListener("change", function(){
-  const wrapper = document.getElementById("sonstigesWrapper");
-  if (this.value === "Sonstiges") {
-    wrapper.classList.add("visible");
-    wrapper.querySelector("input").required = true;
-  } else {
-    wrapper.classList.remove("visible");
-    wrapper.querySelector("input").required = false;
-    wrapper.querySelector("input").value = "";
+    const isCustom = projectTypeSelect.value === 'Sonstiges';
+    sonstigesWrapper.classList.toggle('hidden', !isCustom);
+    projectTypeCustom.required = isCustom;
+
+    if (!isCustom) {
+      projectTypeCustom.value = '';
+    }
   }
+
+  function setStatus(type, message) {
+    if (!formStatus) {
+      return;
+    }
+
+    formStatus.className = 'mb-6 rounded-2xl border px-4 py-3 text-sm';
+
+    if (type === 'success') {
+      formStatus.classList.add('border-green-200', 'bg-green-50', 'text-green-800');
+    } else {
+      formStatus.classList.add('border-red-200', 'bg-red-50', 'text-red-800');
+    }
+
+    formStatus.textContent = message;
+    formStatus.classList.remove('hidden');
+  }
+
+  if (projectTypeSelect) {
+    syncProjectTypeField();
+    projectTypeSelect.addEventListener('change', syncProjectTypeField);
+  }
+
+  if (!form || !timestampField || !projectTypeResolved || !submitButton) {
+    return;
+  }
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    syncProjectTypeField();
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
+    timestampField.value = new Date().toISOString();
+    projectTypeResolved.value = projectTypeSelect && projectTypeSelect.value === 'Sonstiges'
+      ? String(projectTypeCustom.value || '').trim()
+      : String(projectTypeSelect ? projectTypeSelect.value : '').trim();
+
+    const originalLabel = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Anfrage wird gesendet...';
+
+    if (formStatus) {
+      formStatus.classList.add('hidden');
+    }
+
+    try {
+      await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        mode: 'no-cors'
+      });
+
+      setStatus('success', 'Ihre Anfrage wurde gesendet. Ich melde mich so schnell wie moeglich zurueck.');
+      form.reset();
+      syncProjectTypeField();
+    } catch (error) {
+      setStatus('error', 'Das Senden hat gerade nicht funktioniert. Bitte versuchen Sie es erneut oder melden Sie sich direkt per Telefon oder E-Mail.');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalLabel;
+    }
+  });
 });
-
 </script>
-
 </body>
 </html>
